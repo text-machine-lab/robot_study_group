@@ -1,0 +1,309 @@
+G: Hey guys, can I see Evie for a second?	B-OO
+A: Keep it going.	B-DO
+G: Can I see Eve?	B-OO
+A: Okay that (ain’t) working.	B-NSTO
+G: Can I see Eve please?	B-OO
+K: Okay try, try to set it up and...	B-A
+A: We need Eve, we need Eve.	B-OO
+G: Andi, Katie. Can I see Eve please.	I-OO
+A: We need Eve.	I-OO
+G: Guys,	I-OO
+K: Ready, set...	I-OO
+G: No we need Eve.	I-OO
+K: Oh.	I-OO
+G: Thank you. Because I have a different idea.	B-A
+A: Go ahead try it.	B-OO
+G: Wait ‘til it (?).	I-OO
+A: Okay, maybe we should use the sensor, wait where’s the sensor?	B-A
+K: Oh by the way, look what I found? Georgie, I think you might want to come.	B-QS
+A: Here it is.	B-D
+G: Hold on.	B-OO
+A: We’re gonna need it.	B-D
+G: That doesn’t work.	B-NSTO
+A: Okay  nowhere close.	I-NSTO
+T: (Got back there) okay that was, you got it back there...	O
+A: Start forward more. Or do you wanna use (?).	B-A
+T: (?)	O
+A: Go.	B-OO
+G: Yeah.	I-OO
+A: Okay so less back, or do you wanna use a sensor so it will stop	B-ATO
+G: Not on this page please because  that’s where I have my...	B-OO
+K: Okay so I make a new one?	B-QS
+G: collision control to (?) I need to fix something.	B-OO
+A: Here, can I see that other robot thingy?	I-OO
+G: Katie can you fix this please?	I-OO
+K: Yeah I'm trying to.	I-OO
+A: You... will go back	B-D
+G: Can I see Eva. For a second	B-OO
+A: One second	I-OO
+G: How many points for each ball?	B-A
+K: Four I think.	I-A
+G: Yeah, four each so if we manage to get both that’s eight points right there. And we could figure out stuff after that.	I-A
+K: Okay so can I, I download it, I'm trying something.	B-OO
+G: What you doing?	I-OO
+A: Gonna try and put the sensor on.	B-A
+G: I don’t think we need the sensor really, there’s no program for the sensor.	I-A
+A: Yeah there is.	B-OO
+G: And it's (?). I'm gonna go test the collision control	I-OO
+K: <singing>	O
+A: I think the sensor’ll hopefully work.	B-A
+G: Gosh, so close.	B-NSTO
+A: Hang on let me just try putting it on.	B-D
+DBS: (?) back for you guys.	O
+G: Thank you. So after I fix. What do we want this on?	B-D
+A: D.	I-D
+G: D? okay. There we go.	I-D
+A: There we go. Should either, yeah put it forward...	B-A
+G: So close, (?)  two pieces of corn.	B-NSTO
+A: So we just wanna go a little bit more forward.	B-DO
+G: Little bit more forward and then we need to...I’ll fix the...	I-DO
+A: I’ll fix it.	B-OO
+G: Okay I’ll fix the...	I-OO
+A: Sensor.	B-A
+G: ...backwards motion.	B-ATO
+K: That, that’s the program for the sensor.	B-A
+G: Cool. Can I do something on that one.	B-OO
+K: Yeah	I-OO
+G: Thank you. So the forward needs to be four, oh no forty three...	B-ATV
+K: Let me, let me this (?) Eve.	B-OO
+G: Four and then it needs to be...	B-ATV
+A: Oh thank you.	B-OO
+G: Backwards.	B-ATO
+K: Negative. Let me do it.	B-OO
+A: Here I’ll fix the sensor too.	B-A
+K: Negative fifty?	B-ATV
+G: And then, so now we’re (bring this) back...and then we need to turn	B-ATO
+K: Singing	B-OO
+?: (These are taps)	O
+A: Or we could have the sensor up here when we move the plough up.	B-D
+K: Yeah that can happen.	B-OO
+T: What does the sensor do?	O
+A: Stops it.	B-A
+G: And. This. Then...	B-ATO
+K: Oh we need to go this...	B-OO
+A: Okay that’s (?) really messing me up,(?) come out	B-D
+G: And then... What the heck?	B-ATO
+K: It's kinda. Oh my gosh glitch, we have a glitch.	B-QS
+G: It's fine.	B-OO
+K: It's kind of glitching.	B-QS
+T: What happened?	O
+K: What’s going on?	B-OO
+A: It's fine (?).	I-OO
+K: (?).	I-OO
+G: Okay so backwards and then, and then turn right.	B-ATO
+A: Right	B-OO
+G: And	I-OO
+A: I'm moving this.	I-OO
+K: Oh, do, do, do, do...	I-OO
+A: I was just testing to make sure the sensor will work like that and it will.	B-A
+K: Okay try it.	B-OO
+A: I just got to plug it in now.	B-QR
+K: Plug it in, try and plug it in D or 4.	I-QR
+T: What kind of sensor is this?	O
+K: It’ll make it stop.	B-A
+A: Makes it stop once we put the plough up.	B-D
+T: Okay.	O
+A: So like on one of them we can do like... Once it comes back to base we can... Ah. There we go. I'm just gonna put it in A right for now.	B-D
+G: Two	B-ATV
+K: We’re acting like we’re really smart right now.	B-OO
+T: You guys are really smart.	O
+K: Okay and this...	B-OO
+T: You’re building a robot, now your making it pull things.	O
+A: Oh we gotta program it.	B-QR
+G: I'm downloading this one back on.	B-OO
+K: Okay, you’re downloading, okay go try that we’re gonna program for the sensor okay.	I-OO
+A: The sensors on, it's just not doing anything right now.	B-A
+K: <singing>	O
+T: So you got it back to base, what’s that extra little move it does afterwards	O
+A: I didn’t mean to do that I thought that it was (?).	B-NSTO
+T: Yeah because once it's back there.  Like the full robot is in the base so you would be good you wouldn’t have to (?).	O
+A: Here, there you go.	B-OO
+G: Oh, woah okay.	I-OO
+A: Then we could fix the sensor. That one’s not gonna work it’s like. (And like) flip it. I figured out why because it didn’t even hit this fish so it wasn’t in the right position.	B-DO
+G: Try this again.	B-OO
+A: Turn, turn, turn, there we go just...	B-DO
+T: It's just pulling the right (position).	O
+G: That worked so well, lets try this again.	B-NSTO
+A: Let’s try this (?)	B-OO
+T: Like keep track of where you have it lined up	O
+G: We have it like over	B-A
+T: Set	O
+G: At the end and this is right next to our base.	B-A
+T: She said you could make a little (?) out of legos to like...	O
+A: (Here)	B-OO
+K: Oh hey, what’s the sensor connect to? Which port?	B-A
+A: Um. I think it's A.	I-A
+K: Okay, good.	B-OO
+A: If it's not I dunno	I-OO
+T: That’s pretty good right there.	O
+G: Still need that yellow ball (?) I need to fix something.	B-A
+G: (?) going in. After you’ve done what you’re doing can I get back on the computer I need to fix something.	B-OO
+K: Oh sure, try.	I-OO
+A: Thank you.	I-OO
+K: I think I need a break.	I-OO
+G: So the forward and the back are good, the left...can I do three point five? I can so three point five back and then turn left and then (?).	B-ATV
+K: (?) oh my god.	B-OO
+T: (First of all). You don’t have to be ready no-one’s ready. They’re not gonna, they’re not gonna look at your programs they’re just gonna ask you some questions like whether or not you’re enjoying today, how it's going, what they (?) so each team is gonna go out for about eight minutes,	O
+G: No.	B-OO
+M: You’re all gonna go for the same amount of time so it doesn’t (?) so it's just the girls, not the grown ups the grown ups can stay in here, go outside, take a break whatever, the judges will ask you to turn your microphones off while you’re talking to them and I will be taking you out (?).  Second thing is I have had	O
+M: questions about coming into base. If any part of your	O
+M: robot is in base as it's coming back you can grab it, it doesn’t have to come back all the way into base. (?) touching the black line above the black line you’re in base,  (?). Another thing when you’re saving your program please give them names that make sense. I’m seeing a lot of programs called programing, program one, program two and that’s not gonna help you when you (?) this afternoon so find it (?).	O
+K: <whispering>	B-OO
+G: <whispering>	I-OO
+K: How do you mean?	I-OO
+G: <whispering>	I-OO
+M: Okay so there was one other thing that I wanted to tell you but I forget was it was now. I’ll let you know when I figure it out. Get back to work and I’ll start pulling teams in about five minutes to see judges.	O
+G: (I don’t think we need) the sensor?	B-A
+K: No we’re just on...	B-OO
+G: Because somebody put it on upside down and backwards.	B-D
+A: Well it has to be backwards in order for it to...	I-D
+K: Andi	B-OO
+A: It's actually not backwards but...	B-D
+K: Wait let me try something.	B-OO
+G: (?)	O
+K: Okay lets go and test it.	B-OO
+K: Can we borrow this for a sec?	I-OO
+DBF: Oh yeah we’re not (?).	O
+A: How’s it working.	B-OO
+K: It’s beautiful Georgie.	B-NSTO
+G: It's beautiful Katie.	I-NSTO
+DBF: Oh god,	O
+K: No we killed an animal.	B-OO
+<laughing>	O
+K: No the the chicken died,	B-OO
+G: Or the pig died the most.	I-OO
+K: Yeah the pig died the most.	I-OO
+A: Do you think ours is a little destructive?	I-OO
+G: Yeah I need to fix that.	I-OO
+K: We this should not be wall-e, thank god we didn’t name this wall-e. Wall-e is not destructive.  Eve is though.	I-OO
+G: Eve is.	I-OO
+A: So Eve,	I-OO
+G: so what did I change in this.	I-OO
+A: A lot.	I-OO
+G: Not much though.	I-OO
+K: ((singing))	O
+A: No I'm just kidding.	B-OO
+G: So...so it turns left.	B-ATO
+A: Should go...	B-OO
+G: Oh you know what I did I had it back up by three point five	B-ATV
+K: Ooooo	B-OO
+G: Instead of three, I think it should, I should back up four.	B-ATV
+K: Um try three for a bit	I-ATV
+G: Okay	B-OO
+K: And if it doesn’t work we can just go to four.	B-ATV
+A: Right, oh it's not plugged in.	B-QR
+G: Thank you.	B-OO
+A: You’re all set to download.	I-OO
+K: Yeah,	I-OO
+G: Downloading.	I-OO
+G: There it is	I-OO
+A: Do we want to take off the sensor?	B-D
+K: No we’re, we’re gonna test to see how it works if not then	B-OO
+A: There’s something that lights up.	I-OO
+K: Oh I'm finding that.	I-OO
+A: Oh that’s so cool.	I-OO
+G: Oh there it is.	I-OO
+A: I like the headlights for accessories.	I-OO
+K: Yeah.	I-OO
+K: Georgie Georgie we should add this for accessory.	I-OO
+A: Yes.	I-OO
+G: Let’s take this off then.	B-D
+K: Yeah and then...	B-OO
+A: Give me it. Give me it, I’ll go fix it.	I-OO
+K: I’ll get a cord.	B-D
+G: No I’ll fix (this).	I-D
+A: (Georgie) you broke it, you broke it.	B-OO
+K: I can do this	I-OO
+G: I didn’t break it I just did this.	B-D
+K: I want to feel useful.	B-OO
+G: Here.	I-OO
+A: Here I’ll go...	I-OO
+G: I can, I can do this I want to be useful.	I-OO
+A: I got it. Here.	I-OO
+G: This isn’t coming out.	B-D
+A: (?) do it.	B-OO
+K: Just rip out the chord.	B-D
+A: You have to go like that.	I-D
+G: Oh okay, (?) the ice, I want to (?). It's not doing it.	I-D
+A: Have to wait for it to turn on. (Dude) we probably want it down because then it will be more sturdy.	I-D
+K: ((singing))	B-OO
+A: Okay I need the, this, just go in there, I need that other piece to go on there, close enough, no it doesn’t go in all the way unless we want to add it. No just put it through	B-D
+G: That one.	I-D
+A: Hmm, hmm. And we’re supposed to do the other one?	I-D
+G: Did you get it?	B-OO
+A: Yeah now you take these and you pull them so it stays.	B-D
+G: Okay hold on I’ll just put that back in.	I-D
+A: There	B-OO
+G: There, they’re not exactly centered but pretty cool.	B-D
+A: Oh you can just move it	I-D
+G: Oh god. Move that to the middle I’ll put it back in here I’ll hold, I’ll hold on to this here, there we go perfect.	I-D
+A: Oops.	B-OO
+G: Number five is alive (for a second).	I-OO
+A: Okay well I can put it back one hole or something but that’s, oh the chord, the chord, the chord there we go.	B-D
+G: The chord.	I-D
+K: Did we get it? Did we get it?	B-OO
+A: Yeah there’s a (?).	I-OO
+K: It's not (?).	I-OO
+A: Oh my god I have to go fix this.	B-D
+K: Yeah, yeah. I'm so tired.	B-OO
+A: It's not gonna work because see now it's dragging on the ground.	B-D
+K: I will be right back.	B-OO
+A: I’ll be fixing this.	I-OO
+G: Put it on top.	B-D
+A: Damn.	B-OO
+G: Oh my gosh. Shit. Sugar.	I-OO
+K: Guys do you remember (?)?	I-OO
+G: Mmm (banana). Banana	I-OO
+A: That really sounded like you said a bad word but I know you didn’t.	I-OO
+G: Because I'm a good person.	I-OO
+A: I know.	I-OO
+G: Uh uh uh	I-OO
+A: Oh they’re here, right here.	B-D
+G: Okay.	B-OO
+A: Okay let me try putting my end first. In...	B-D
+G: Like right here?	I-D
+A: No, no, no one more back. Ah. I got my end from pushing.	I-D
+G: That will so drag.	I-D
+A: That’s okay it sounds bad.	B-OO
+G: I just don’t think we need this.	B-D
+A: Here let me fix it, I got it.	I-D
+K: Eve needs eyes though.	I-D
+A: .hhh Why don’t we just put it on top.	I-D
+K: Oh come on.	I-D
+A: We can put it right here.	I-D
+K: Hey guys I, I need to try something.	B-OO
+G: We still need to test our last plan.	I-OO
+A: Yeah we’ll just put it like that.	B-D
+K: Oh (?).	B-OO
+A: Oh I have something that will do that, I need this.	I-OO
+G: Wait I have an idea.	I-OO
+A: I got it.	B-D
+G: We need an L Shape. We have L shaped one somewhere.	I-D
+K: We were trying to do sensor (?) but it didn’t work.	B-A
+T: What do you need the sensor to do?	O
+K: It was supposed to stop.	B-A
+G: Okay let me put this here and we’re gonna attach it.	B-D
+A: Yeah that’s what I was thinking because that’s what I have right here.	I-D
+G: Oh.	B-OO
+T: (?) eyes now too.	O
+G: Yeah	B-OO
+T: That’s cool	O
+A: It needs to see.	B-OO
+G: Here I’ll do this on each side.	B-D
+K: I  want this computer I want a touch screen.	B-OO
+G: Unless...	I-OO
+K: Oh lets see.	I-OO
+A: Make it longer.	B-D
+G: Okay let’s take this one.	I-D
+A: Big one or small one?	I-D
+K: Got it.	B-OO
+A: Hey do you want something smaller?	B-D
+G: No I like this one.	I-D
+K: (I think that's what it is).	B-OO
+M: You’re the first ones up (?).	I-OO
+K: Okay I've been missing all of this.	B-D
+A: Then we go with this, we can put that through.	B-ATO
+K: I'm fix, I'm, I'm doing the lighting, are we doing that?	B-D
+G: Okay.	B-OO
+A: Okay.	I-OO
+G: What’s in the second one? Right here.	B-D

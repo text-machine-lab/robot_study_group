@@ -1,0 +1,7 @@
+*.pickle
+*.pyc
+*.jar
+*.out
+InferSent/
+models/
+predictions/
