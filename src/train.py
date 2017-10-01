@@ -10,14 +10,15 @@ import torch
 from keras.models import Sequential, Model
 from keras.utils.np_utils import to_categorical
 from keras.layers import Embedding, LSTM, Dense, Merge, Concatenate, MaxPooling1D, TimeDistributed, Flatten, Masking, Input, Dropout, Bidirectional
-from keras.layers import concatenate, SimpleRNN, GRU, Lambda
+from keras.layers import concatenate, SimpleRNN, GRU, Lambda, Reshape
 from keras.preprocessing.sequence import pad_sequences
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 from keras.models import model_from_json, load_model
-from sklearn.metrics import classification_report, accuracy_score
+from sklearn.metrics import classification_report, accuracy_score, precision_recall_fscore_support
 import nltk
 from keras_contrib.layers import CRF
 import keras.backend as K
+from keras.optimizers import RMSprop
 
 GLOVE_PATH = '../InferSent/dataset/GloVe/glove.840B.300d.txt' # for sentence embeddings
 # WORD_VECTORS = '../../word_vectors/glove.6B.100d.txt'
@@ -48,8 +49,8 @@ def get_word_embeddings(text, word_vectors):
     """Given a text, tokenize it and return the word embeddings of the token list"""
     tokens = nltk.word_tokenize(text)
     embeddings = np.array([word_vectors.get(x, np.zeros(WORD_EMBEDDING_DIM)) for x in tokens]) # (tokens, dim)
-    embeddings = np.expand_dims(embeddings, axis=0) # (sentence, tokens, dim), only 1 sentence here
-    embeddings = pad_sequences(embeddings, maxlen=MAX_SENTENCE_LEN, dtype='float32', padding='pre', truncating='post', value=-1.)
+    # embeddings = np.expand_dims(embeddings, axis=0) # (sentence, tokens, dim), only 1 sentence here
+    # embeddings = pad_sequences(embeddings, maxlen=MAX_SENTENCE_LEN, dtype='float32', padding='pre', truncating='post', value=-1.)
     return embeddings # (1, MAX_SENTENCE_LEN, dim)
 
 def get_average_embeddings(text, word_vectors):
@@ -67,7 +68,7 @@ def get_end_embeddings(text, word_vectors):
     embeddings = first + last
     return embeddings
 
-def read_data(file_path, word_vectors, padding=True):
+def read_data(file_path, word_vectors, padding=True, file_list=None):
     one_hot = {}
     for i, l in enumerate(ascii_uppercase):
         bits = np.zeros(26)
@@ -79,7 +80,11 @@ def read_data(file_path, word_vectors, padding=True):
     infersent.build_vocab_k_words(K=1000)
     speaker_regx = re.compile(r'[A-Z]+:')
 
-    input_files = glob.glob(file_path)
+    if file_list is None:
+        input_files = glob.glob(file_path+'*.dat')
+    else:
+        input_files = [file_path+x.strip() for x in open(file_list)]
+
     X_speakers = []
     X_sentences = []
     X_word_embeddings = []
@@ -93,6 +98,7 @@ def read_data(file_path, word_vectors, padding=True):
         labels = []
         with open(input_file) as f:
             speaker = ''
+            previous_speaker = ''
             for line in f:
                 try:
                     content, label = line.strip().split('\t')
@@ -107,16 +113,17 @@ def read_data(file_path, word_vectors, padding=True):
                     speaker = match.group()[:-1]
                     content = content[match.end()+1:]
 
-                speakers.append(one_hot.get(speaker, np.zeros(26)))
+                speakers.append(int(speaker == previous_speaker)) # record if the speaker has changed
+                previous_speaker = speaker
                 sentences.append(content)
-                word_embeddings.append(get_average_embeddings(content, word_vectors))
+                word_embeddings.append(get_word_embeddings(content, word_vectors))
                 sentence_lengths.append(len(nltk.word_tokenize(content)))
                 # if word_embeddings is None:
                 #     word_embeddings = get_end_embeddings(content, word_vectors)
                 # else:
                 #     word_embeddings = np.concatenate((word_embeddings, get_end_embeddings(content, word_vectors)), axis=0)
 
-                if label =='O':
+                if label == 'O':
                     labels.append(label)
                 elif label[1] == '-':
                     labels.append(label[2:])
@@ -125,16 +132,16 @@ def read_data(file_path, word_vectors, padding=True):
                     continue
                     # labels.append('O')
 
-        x_speakers = np.array(speakers)
-        X_speakers.append(x_speakers)
-
-        print("# sentencees", input_file, len(sentences))
+        speakers = np.expand_dims(np.array(speakers), axis=-1)  # in order to make 3D tensor
+        X_speakers.append(speakers)
 
         infersent.update_vocab(sentences, tokenize=True)
         x_sentences = infersent.encode(sentences, tokenize=True)
         X_sentences.append(x_sentences)
 
-        X_word_embeddings.append(word_embeddings)
+        word_embeddings = pad_sequences(word_embeddings, maxlen=MAX_SENTENCE_LEN, dtype='float32', padding='pre',
+                                   truncating='post', value=-1.)
+        X_word_embeddings.append(word_embeddings) # (files, sentences, words, word_dim)
 
         sentence_lengths = np.expand_dims(np.array(sentence_lengths), axis=-1) # in order to make 3D tensor
         X_sentence_lengths.append(sentence_lengths)
@@ -157,7 +164,7 @@ def read_data(file_path, word_vectors, padding=True):
         Y_labels = pad_sequences(Y_labels, maxlen=MAX_SEQ_LEN, dtype='int32', padding='post', truncating='post',
                                    value=LABELS.index('O')) # Add a dummy class for padded time steps
 
-    return [X_sentences, X_time_steps], Y_labels
+    return [X_word_embeddings, X_sentences, X_speakers], Y_labels
     # return X_sentences, Y_labels
 
 
@@ -208,38 +215,39 @@ def label_to_int(label_list):
 def seq2seq():
     n_classes = len(LABELS)
 
+    tokens_input = Input(shape=(None, MAX_SENTENCE_LEN, WORD_EMBEDDING_DIM))
     converse_input = Input(shape=(None, SENTENCE_ENCODING_DIM))
-    # length_input = Input(shape=(None, 1))
-    # word_input = Input(shape=(None, WORD_EMBEDDING_DIM))
-    time_input = Input(shape=(None, 1))
+    speaker_input = Input(shape=(None, 1))
+
+    tokens = Masking(mask_value=-1.)(tokens_input) #(None, sentences, sent_length, WORD_DIM)
+    tokens = Dropout(0.4)(tokens)
+    tokens = TimeDistributed(Bidirectional(LSTM(256, return_sequences=True)))(tokens) #(None, sentences, sent_length, 256)
+    tokens = TimeDistributed(MaxPooling1D(pool_size=MAX_SENTENCE_LEN))(tokens) # (None, sentences, 1, 256)
+    tokens = TimeDistributed(Flatten())(tokens) # (None, sentences, 256)
 
     converse = Masking(mask_value=-1.)(converse_input)
-    converse = Dropout(0.2)(converse)
+    converse = Dropout(0.4)(converse)
     converse = Bidirectional(LSTM(1024, return_sequences=True))(converse)
-    converse = Bidirectional(LSTM(1024, return_sequences=True))(converse)
-    converse = Dropout(0.3)(converse)
+    # converse = Bidirectional(LSTM(1024, return_sequences=True))(converse)
+    # converse = Dropout(0.3)(converse)
 
     # lengths = Masking(mask_value=-1)(length_input)
 
-    # words = Masking(mask_value=-1.)(word_input)
-    # words = Dropout(0.2)(words)
-
-    model = concatenate([converse, time_input], axis=-1)
-
-    # print("merged outpout shape", model.output_shape)
+    model = concatenate([tokens, converse, speaker_input], axis=-1) #(None, sentences, data_dim)
 
     model = TimeDistributed(Dense(1024, activation='relu'))(model)
     model = Dropout(0.3)(model)
     model = TimeDistributed(Dense(512, activation='relu'))(model)
     model = Dropout(0.3)(model)
-    # predictions = TimeDistributed(Dense(n_classes, activation='softmax'))(model)
+    predictions = TimeDistributed(Dense(n_classes, activation='softmax'))(model)
 
     crf = CRF(n_classes, sparse_target=True)
     predictions = crf(model)
-
-    model = Model(inputs=[converse_input, time_input], outputs=predictions)
-    model.summary()
-    # model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+    #
+    model = Model(inputs=[tokens_input, converse_input, speaker_input], outputs=predictions)
+    # model.summary()
+    # optimizer = RMSprop(lr=0.01, rho=0.9, epsilon=1e-08, decay=0.0) # default lr=0.001
+    # model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
     model.compile('adam', loss=crf.loss_function, metrics=[crf.accuracy])
     return model
 
@@ -286,6 +294,54 @@ def train(training_path, model_dest, valid_path=None):
     evaluate(model, valid_data, results_dest='../predictions/')
     model.save_weights(model_dest + 'final_weights.h5')
 
+
+def train_cv(data_path, model_dest, file_list=None, use_CRF=True):
+    """Train with cross validation"""
+
+    word_vectors = load_wordvecs()
+
+    X, Y_labels = read_data(data_path, word_vectors, file_list=file_list)
+    N = len(Y_labels)
+    roll_num = round(N/5)
+    indexes = np.array(range(N))
+
+    if use_CRF:
+        Y_labels = np.expand_dims(np.array(Y_labels), axis=-1)  # in order to make 3D tensor
+    else: # softmax output
+        Y_labels = np.array([to_categorical(y) for y in Y_labels])
+    prf_scores = []
+    accuracies = []
+
+    for cv in range(5):
+        print(indexes)
+
+        X_test = [X[0][indexes[0:roll_num], :], X[1][indexes[0:roll_num], :], X[2][indexes[0:roll_num], :]]
+        y_test = Y_labels[indexes[0:roll_num], :]
+        X_train = [X[0][indexes[roll_num:], :], X[1][indexes[roll_num:], :], X[2][indexes[roll_num:], :]]
+        y_train = Y_labels[indexes[roll_num:], :]
+
+        model = seq2seq()
+        architecture = model.to_json()
+        with open(model_dest + 'arch.json', "w") as f:
+            f.write(architecture)
+
+        model.fit(X_train, y_train, validation_data=[X_test, y_test], shuffle=True, batch_size=10, epochs=150)
+
+        report = evaluate(model, (X_test, y_test), use_CRF=use_CRF)
+        accuracies.append(report[0])
+        prf_scores.append(report[1][0:3])
+
+        model.save_weights(model_dest + 'weights' + str(cv) + '.h5')
+        indexes = np.roll(indexes, roll_num)
+
+    mean_accuracy = np.mean(accuracies)
+    mean_prf_scores = np.mean(np.array(prf_scores), axis=0)
+    print("Accuracies:", accuracies)
+    print("Average accuracy of 5-folds cv: %f.3" % mean_accuracy)
+    print("\nPrecision, recall, f1 scores:")
+    for item in prf_scores:
+        print(item)
+    print("Average precision, recall, f1:", mean_prf_scores)
 
 # def train_batch(training_path, model_dest, valid_path=None):
 #     """This allows variant sequence length. Only batch size 1 is used."""
@@ -338,15 +394,17 @@ def train(training_path, model_dest, valid_path=None):
 #     model.save(model_dest)
 
 
-def evaluate(model, test_data, results_dest=None):
+def evaluate(model, test_data, results_dest=None, use_CRF=True):
 
     y_predict = model.predict(test_data[0])
     y_predict = np.argmax(y_predict, axis=-1)
     labels_predict = y_predict.reshape(-1)
     print("predictions", labels_predict.shape)
 
-    # labels_true = np.argmax(test_data[1], axis=-1)
-    labels_true = test_data[1]
+    if use_CRF:
+        labels_true = test_data[1]
+    else: # softmax type output
+        labels_true = np.argmax(test_data[1], axis=-1)
     labels_true = labels_true.reshape(-1)
 
     used_indexes = np.where(labels_true < LABELS.index('O'))[0]
@@ -375,13 +433,21 @@ def evaluate(model, test_data, results_dest=None):
             with open(results_dest+str(i)+'.dat', 'w') as f:
                 f.write('\n'.join([LABELS[s] for s in y]))
 
+    return accuracy_score(labels_true, labels_predict), \
+           precision_recall_fscore_support(labels_true, labels_predict, average='weighted')
+
 
 if __name__ == '__main__':
-    training_path = '../data/training/*.dat'
-    valid_path = '../data/test/*.dat'
-    # training_path = '../data/exp/*.dat'#quick experiment
-    model_dest = '../models/'
+    # training_path = '../data/training/'
+    # valid_path = '../data/test/'
+    # # training_path = '../data/exp/*.dat'#quick experiment
+    # model_dest = '../models/'
+    #
+    # train(training_path, model_dest, valid_path=valid_path)
+    # # train_batch(training_path, model_dest, valid_path=valid_path)
 
-    train(training_path, model_dest, valid_path=valid_path)
-    # train_batch(training_path, model_dest, valid_path=valid_path)
+    data_path = '../data/all/'
+    model_dest = '../models/'
+    file_list = '../data/randomized_list.txt'
+    train_cv(data_path, model_dest, file_list=file_list, use_CRF=False)
 
